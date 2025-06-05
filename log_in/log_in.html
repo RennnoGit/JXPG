@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>城市绩效评估系统登陆</title>
+
+<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+	<div class="page-wrapper">
+		<div class="materialContainer">
+			<div class="box">
+				<div class="title">登录</div>
+				<div class="input">
+					<label for="name">用户名</label>
+					<input type="text" name="name" id="name">
+					<span class="spin"></span>
+				</div>
+				<div class="input">
+					<label for="pass">密码</label>
+					<input type="password" name="pass" id="pass">
+					<span class="spin"></span>
+				</div>
+				<div class="button login">
+					<button id="loginBtn" type="button">
+						<span>登录</span>
+						<i class="fa fa-check"></i>
+					</button>
+				</div>
+				<a href="javascript:" class="pass-forgot">忘记密码？</a>
+			</div>
+
+			<div class="overbox">
+				<div class="material-button alt-2">
+					<span class="shape"></span>
+				</div>
+				<div class="title">注册</div>
+				<div class="input">
+					<label for="regname">用户名</label>
+					<input type="text" name="regname" id="regname">
+					<span class="spin"></span>
+				</div>
+				<div class="input">
+					<label for="regpass">密码</label>
+					<input type="password" name="regpass" id="regpass">
+					<span class="spin"></span>
+				</div>
+				<div class="input">
+					<label for="reregpass">确认密码</label>
+					<input type="password" name="reregpass" id="reregpass">
+					<span class="spin"></span>
+				</div>
+				<div class="button">
+					<button>
+						<span>注册</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<!-- 底部区域 -->
+		<div class="footer-container">
+			<a href="https://www.gml.ac.cn/">
+				<img src="./images/logo5.png" alt="Logo" class="footer-logo">
+			</a>
+			
+			
+			<div class="footer-info">
+				<p>Copyright © 2025 All Rights Reserved 光明实验室智慧城市团队 版权所有</p>
+				<p>
+					<a href="#">首页</a> |
+					<a href="https://www.gml.ac.cn/kytd/193.html">关于我们</a> |
+					<a href="#">隐私政策</a> | 
+					<a href="#">使用条款</a> | 
+					<a href="#">常见问题</a>
+				</p>
+			</div>
+			
+			<div class="footer-contact">
+				<p>联系我们：gmlab@gml.ac.cn</p>
+				<p>电话：0755-33691810</p>
+			</div>
+		</div>
+	</div>
+	
+
+	
+
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/index.js"></script>
+<script>
+    document.getElementById("loginBtn").addEventListener("click", function () {
+        window.location.href = "../system/index.html";
+    });
+</script>
+</body>
+</html>
