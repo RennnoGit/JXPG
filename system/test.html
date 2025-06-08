@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>城市更新数据可视化面板</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* 顶部标题栏 */
+        .header {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .date-selector {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 6px 12px;
+            width: 250px;
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0 8px;
+            width: 100%;
+            outline: none;
+            font-size: 13px;
+        }
+
+        /* 主要内容区域 */
+        .main-flex-area {
+            padding: 15px;
+            height: calc(100% - 70px);
+        }
+
+        .container-flex {
+            display: flex;
+            height: 100%;
+            gap: 15px;
+        }
+
+        /* 左侧区域 - 三个垂直排列的块 */
+        .box-left {
+            flex: 0 0 65%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* 右侧区域 - 一个大的块 */
+        .box-right {
+            flex: 1;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            overflow: auto;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            height: 100%;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #4facfe;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chart-content {
+            height: calc(100% - 40px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .chart-content img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* 左侧三个区块 */
+        .policy-chart {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .city-chart {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .case-chart {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 词云区域 */
+        .wordcloud-container {
+            display: flex;
+            gap: 15px;
+            height: 100%;
+        }
+
+        .wordcloud-item {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 数据卡片 */
+        .data-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .data-card h3 {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+
+        .data-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #00f2fe;
+        }
+
+        .data-desc {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 3px;
+        }
+
+        /* 响应式设计 */
+        @media screen and (max-width: 1200px) {
+            .container-flex {
+                flex-direction: column;
+            }
+
+            .box-left {
+                flex: 0 0 auto;
+                height: 60%;
+            }
+
+            .box-right {
+                height: 40%;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .header-controls {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .wordcloud-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部标题栏 -->
+    <div class="header">
+        <h1>城市更新数据分析平台</h1>
+        <div class="header-controls">
+            <div class="date-selector">
+                2023年1月 - 2023年12月
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="搜索城市、项目或政策...">
+            </div>
+        </div>
+    </div>
+
+    <!-- 内容区父容器 -->
+    <div class="main-flex-area">
+        <div class="container-flex">
+            <!-- 左侧区域 - 三个垂直排列的块 -->
+            <div class="box-left">
+                <!-- 历年政策分析 -->
+                <div class="policy-chart">
+                    <div class="chart-title">历年政策分析</div>
+                    <div class="chart-content">
+                        <!-- 图1: 历年政策分析 -->
+                        <div
+                            style="width: 100%; height: 100%; background: linear-gradient(135deg, #2c3e50, #4a6491); display: flex; justify-content: center; align-items: center; border-radius: 8px;">
+                            <div style="text-align: center; color: rgba(255,255,255,0.7);">
+                                <div style="font-size: 40px; margin-bottom: 10px;">📈</div>
+                                <div>图1: 历年政策发布趋势图</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 各城市更新项目 -->
+                <div class="city-chart">
+                    <div class="chart-title">各城市更新项目</div>
+                    <div class="chart-content">
+                        <!-- 图2: 各城市更新项目 -->
+                        <div
+                            style="width: 100%; height: 100%; background: linear-gradient(135deg, #2c3e50, #4a6491); display: flex; justify-content: center; align-items: center; border-radius: 8px;">
+                            <div style="text-align: center; color: rgba(255,255,255,0.7);">
+                                <div style="font-size: 40px; margin-bottom: 10px;">🗺️</div>
+                                <div>图2: 城市更新项目分布热力图</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 案例类型分布 -->
+                <div class="case-chart">
+                    <div class="chart-title">案例类型分布</div>
+                    <div class="chart-content">
+                        <!-- 图3: 案例类型分布 -->
+                        <div
+                            style="width: 100%; height: 100%; background: linear-gradient(135deg, #2c3e50, #4a6491); display: flex; justify-content: center; align-items: center; border-radius: 8px;">
+                            <div style="text-align: center; color: rgba(255,255,255,0.7);">
+                                <div style="font-size: 40px; margin-bottom: 10px;">📊</div>
+                                <div>图3: 案例类型分布比例图</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-card">
+                        <h3>政策总数</h3>
+                        <div class="data-value">1,248</div>
+                        <div class="data-desc">较上月增长 5.2%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧区域 - 一个大的块包含两个词云图 -->
+            <div class="box-right">
+                <div class="chart-container">
+                    <div class="chart-title">词云分析</div>
+                    <div class="wordcloud-container">
+                        <!-- 图4: 政策关键词词云 -->
+                        <div class="wordcloud-item">
+                            <div class="chart-content">
+                                <div
+                                    style="width: 100%; height: 100%; background: linear-gradient(135deg, #2c3e50, #4a6491); display: flex; justify-content: center; align-items: center; border-radius: 8px;">
+                                    <div style="text-align: center; color: rgba(255,255,255,0.7);">
+                                        <div style="font-size: 40px; margin-bottom: 10px;">☁️</div>
+                                        <div>图4: 政策关键词词云</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 图5: 项目描述词云 -->
+                        <div class="wordcloud-item">
+                            <div class="chart-content">
+                                <div
+                                    style="width: 100%; height: 100%; background: linear-gradient(135deg, #2c3e50, #4a6491); display: flex; justify-content: center; align-items: center; border-radius: 8px;">
+                                    <div style="text-align: center; color: rgba(255,255,255,0.7);">
+                                        <div style="font-size: 40px; margin-bottom: 10px;">☁️</div>
+                                        <div>图5: 项目描述词云</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟数据更新效果
+        document.addEventListener('DOMContentLoaded', function () {
+            const valueEl = document.querySelector('.data-value');
+            const descEl = document.querySelector('.data-desc');
+
+            let value = 1248;
+            let growthRate = 5.2;
+
+            setInterval(() => {
+                // 模拟数据变化
+                const increment = Math.floor(Math.random() * 10);
+                value += increment;
+                growthRate = (Math.random() * 2 + 4).toFixed(1);
+
+                valueEl.textContent = value.toLocaleString();
+                descEl.textContent = `较上月增长 ${growthRate}%`;
+            }, 5000);
+        });
+    </script>
+</body>
+
+</html>
