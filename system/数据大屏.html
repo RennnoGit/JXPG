@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/icofont.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style-index.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/数据大屏.css">
     <link rel="stylesheet" id="theme-change" type="text/css" href="#">
 
     <!-- Favicon Link -->
@@ -146,50 +147,71 @@
         <div class="underline-wrapper">
             <div class="animated-underline"></div>
         </div>
+        
+        <!-- 内容区父容器，撑满剩余高度 -->
+        <!-- <div class="main-flex-area">
+            <div class="container-flex">
+                <div class="box box-left">
+                    历年政策发布
+                </div>
+                <div class="box box-right">
+                    词云分析
+                </div>
+            </div>
+        </div> -->
+        <div class="main-flex-area">
+            <div class="container-flex">
+                <!-- 左侧区域 -->
+                <div class="box box-left">
+                    <!-- 历年政策发布 -->
+                    <div class="section-top">
+                        <h3>历年政策发布</h3>
+                        <img src="./assets/images/图片2.png" alt="图2" class="img-full">
+                    </div>
+        
+                    <!-- 下方两个并排 -->
+                    <div class="section-bottom">
+                        <div class="section-half">
+                            <h3>各城市更新项目</h3>
+                            <img src="./assets/images/图片3.png" alt="图3" class="img-full">
+                        </div>
+                        <div class="section-half">
+                            <h3>案例类型分布</h3>
+                            <img src="./assets/images/图片4.png" alt="图4" class="img-full">
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- 右侧区域 -->
+                <div class="box box-right">
+                    <h3>词云分析</h3>
+                    <!-- 新增搜索栏区域 -->
+                    <div class="search-bar">
+                        <select class="search-select" required>
+                            <option value="" disabled selected hidden>城市</option>
+                            <option value="beijing">北京市</option>
+                            <option value="shanghai">上海市</option>
+                            <option value="guangzhou">广州市</option>
+                            <option value="shenzhen">深圳市</option>
+                        </select>
+                          
+                        <input type="text" class="search-input" placeholder="请输入名称">
+                        <button class="search-button">查找</button>
+                    </div>
+                    
+                    <div class="wordcloud-area">
+                        <img src="./assets/images/图片5.png" alt="图5" class="img-full img-small">
+                        <img src="./assets/images/图片6.png" alt="图6" class="img-full" style="margin-top: 40px;">
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+          
 
         
-        <!-- 菜单和输入框的容器 -->
-        <div class="menu-with-input">
-            <!-- 菜单容器 -->
-            <div class="dropdown-menu-wrapper">
-                <div class="dropdown-button" onclick="toggleMenu()">
-                    <span id="dropdownLabel">类型</span>
-                    <img src="./assets/images/sort_desc.png" alt="排序图标" class="dropdown-icon">
-                </div>
-                <ul class="dropdown-content" id="dropdownMenu">
-                    <li onclick="selectOption(this)">标签</li>
-                    <li onclick="selectOption(this)">实体</li>
-                    <li onclick="selectOption(this)">关系</li>
-                    <li onclick="selectOption(this)">属性</li>
-                </ul>
-            </div>
-
-            <!-- 输入框 -->
-            <input type="text" class="name-input" placeholder="请输入名称" id="nameInput">
-            <!-- 固定右下角的图片 -->
-            <!-- 用作背景容器 -->
-            <div class="fixed-right-background" id="rightBackground"></div> 
-        </div>
-        <div class="form-section-wrapper">
-            <!-- 查找按钮 -->
-            <div class="search-button-wrapper">
-                <button class="search-button">查找</button>
-            </div>
-            <div class="reset-button-wrapper">
-                <button class="reset-button">重置图谱</button>
-            </div>
-            <!-- 下划线2 -->
-            <div class="underline-wrapper1">
-                <div class="animated-underline1"></div>
-            </div>
-            <div class="legend-statistics">节点图例</div>
-            <!-- 下划线3 -->
-            <div class="underline-wrapper1">
-                <div class="animated-underline1"></div>
-            </div>
-            <div class="legend-statistics">统计信息</div>
-            
-        </div>
+        
         
 
 
@@ -200,7 +222,7 @@
             <div class="side-menu-wrap">
                 <ul class="main-menu">
                     <li>
-                        <a href="javascript:void(0);" class="active">
+                        <a href="./index.html" class="active">
                             <span class="icon-menu feather-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             </span>
@@ -208,26 +230,6 @@
                                 知识查询
                             </span>
                         </a>
-                        <!-- <ul class="sub-menu">
-                            <li>
-                                <a href="index.html">
-                                    <span class="icon-dash">
-                                    </span>
-                                    <span class="menu-text">
-                                        Admin
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="user.html">
-                                    <span class="icon-dash">
-                                    </span>
-                                    <span class="menu-text">
-                                        User
-                                    </span>
-                                </a>
-                            </li>
-                        </ul> -->
                     </li>
 
                     <!-- <li>
@@ -261,7 +263,7 @@
                         </ul>
                     </li> -->
                     <li>
-                        <a href="./数据大屏.html">
+                        <a href="数据大屏.html" class="active">
                             <span class="icon-menu feather-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
                             </span>
